@@ -17,16 +17,11 @@ public class IssuesRepository {
         return items.add(item);
     }
 
-    public Issue getById(int id) {
-        for (Issue item : items) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
+    public void openById(int id){
+        items.get(id).setOpen(true);
     }
 
-    public boolean remove(Issue item) {
-        return items.remove(item);
+    public void closeById(int id){
+        items.get(id).setOpen(false);
     }
 }

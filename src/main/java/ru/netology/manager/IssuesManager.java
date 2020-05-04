@@ -1,22 +1,25 @@
 package ru.netology.manager;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import ru.netology.domain.Issue;
 import ru.netology.repository.IssuesRepository;
 
 import java.util.*;
 import java.util.function.Predicate;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class IssuesManager {
-    IssuesRepository repository = new IssuesRepository();
+    private IssuesRepository repository = new IssuesRepository();
 
-    public List<Issue> filterBy (Predicate predicate){
-        List<Issue> all = repository.getAll();
-        List<Issue> open = new ArrayList<>();
-        for (Issue issue : all){
-            if (predicate.test(issue)){
-                open.add(issue);
+    public List<Issue> filterBy(Predicate<Issue> predicate) {
+        List<Issue> result = new ArrayList<>();
+        for (Issue issue : repository.getAll()) {
+            if (predicate.test(issue)) {
+                result.add(issue);
             }
         }
-        return open;
-    }
+        return result;
+    }  // вызов метода List<Issue> actual = issueManager.filterByAuthor(issue -> issue.getAuthor().equals("vasya"));
 }
