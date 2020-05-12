@@ -1,17 +1,17 @@
 package ru.netology.manager;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import ru.netology.domain.Issue;
 import ru.netology.repository.IssuesRepository;
 
 import java.util.*;
 import java.util.function.Predicate;
 
-@AllArgsConstructor
-@NoArgsConstructor
 public class IssuesManager {
-    private IssuesRepository repository = new IssuesRepository();
+    private IssuesRepository repository;
+
+    public IssuesManager(IssuesRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Issue> filterBy(Predicate<Issue> predicate) {
         List<Issue> result = new ArrayList<>();
@@ -20,6 +20,11 @@ public class IssuesManager {
                 result.add(issue);
             }
         }
-        return result;
+        return sort(result);
     }  // вызов метода List<Issue> actual = issueManager.filterByAuthor(issue -> issue.getAuthor().equals("vasya"));
+
+    public List<Issue> sort(List<Issue> input) {
+        input.sort(Comparator.comparing(Issue::getDateOfChange).reversed());
+        return input;
+    }
 }

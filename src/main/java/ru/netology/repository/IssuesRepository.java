@@ -17,11 +17,21 @@ public class IssuesRepository {
         return items.add(item);
     }
 
-    public void openById(int id){
-        items.get(id).setOpen(true);
+    public void openById(int id) {
+        for (Issue issue : getAll()) {
+            if (issue.getId() == id) {
+                issue.setOpen(true);
+                break;
+            }
+        }
     }
 
-    public void closeById(int id){
-        items.get(id).setOpen(false);
+    public void closeById(int id) {
+        for (Issue issue : getAll()) {
+            if (issue.getId() == id) {
+                issue.setOpen(false);
+                break;
+            }
+        }
     }
 }
