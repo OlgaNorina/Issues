@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class IssuesManagerTest {
     private IssuesRepository repository = new IssuesRepository();
     private IssuesManager manager = new IssuesManager(repository);
-    HashSet<String> assignee1 = new HashSet<String>((Arrays.asList("Иванов")));
-    HashSet<String> assignee2 = new HashSet<String>((Arrays.asList("Петров")));
-    HashSet<String> assignee3 = new HashSet<String>((Arrays.asList("Сидоров")));
+    private HashSet<String> assignee1 = new HashSet<>((Arrays.asList("Иванов")));
+    private HashSet<String> assignee2 = new HashSet<>((Arrays.asList("Петров")));
+    private HashSet<String> assignee3 = new HashSet<>((Arrays.asList("Сидоров")));
 
-    HashSet<String> label1 = new HashSet<>((Arrays.asList("BUG")));
-    HashSet<String> label2 = new HashSet<>((Arrays.asList("new feature")));
-    HashSet<String> label3 = new HashSet<>((Arrays.asList("task")));
+    private HashSet<String> label1 = new HashSet<>((Arrays.asList("BUG")));
+    private HashSet<String> label2 = new HashSet<>((Arrays.asList("new feature")));
+    private HashSet<String> label3 = new HashSet<>((Arrays.asList("task")));
 
     private Issue first = new Issue(1, "Иванов", assignee1, "Текст1", label1, true, "2020/04/28");
     private Issue second = new Issue(2, "Петров", assignee2, "Текст2", label3, true, "2020/04/15");
@@ -72,5 +72,18 @@ class IssuesManagerTest {
         Issue fourth = new Issue(4, "Иванов", assignee3, "Текст4", label2, false, "2020/05/01");
         repository.add(fourth);
         assertArrayEquals(new Issue[]{fourth, first, third, second}, manager.filterBy(issue -> true).toArray());
+    }
+
+    @Test
+    void shouldChangeToOpen() {
+        repository.openById(3);
+        assertArrayEquals(new Issue[]{first, third, second}, manager.filterBy(issue -> issue.isOpen()).toArray());
+    }
+
+    @Test
+    void shouldChangeToClose() {
+        repository.closeById(1);
+        repository.closeById(2);
+        assertArrayEquals(new Issue[]{first, third, second}, manager.filterBy(issue -> !issue.isOpen()).toArray());
     }
 }

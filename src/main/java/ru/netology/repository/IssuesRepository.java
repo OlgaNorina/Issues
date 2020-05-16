@@ -13,8 +13,8 @@ public class IssuesRepository {
         return items;
     }
 
-    public boolean add(Issue item) {
-        return items.add(item);
+    public void add(Issue item) {
+        items.add(item);
     }
 
     public void openById(int id) {

@@ -23,8 +23,8 @@ public class IssuesManager {
         return sort(result);
     }  // вызов метода List<Issue> actual = issueManager.filterByAuthor(issue -> issue.getAuthor().equals("vasya"));
 
-    public List<Issue> sort(List<Issue> input) {
-        input.sort(Comparator.comparing(Issue::getDateOfChange).reversed());
-        return input;
+    public List<Issue> sort(List<Issue> exist) {
+        exist.sort(Comparator.comparing(Issue::getDateOfChange).reversed());
+        return exist;
     }
 }
